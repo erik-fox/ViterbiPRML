@@ -8,7 +8,7 @@ reg slowclock;
 always @ (posedge clock)
   slowclock=~slowclock;
 
-//combinational logic with blocking assignments
+//combinational logic with blocking assignments into the output
  
 //shift register of inputs
 always@(posedge slowclock)
