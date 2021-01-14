@@ -26,7 +26,7 @@ begin
 end
 always @(negedge slow)
 begin
-	in = $urandom();
+	{in,reset} = $urandom();
 end
 
 always
