@@ -9,11 +9,16 @@ always @ (posedge clock)
 	slowclock<=~slowclock;
 
 //combinational logic with blocking assignments into the output
-//always @ (posedge slowclock)//is this working with the new data?
 //po
-//always @ (negedge slowclock)     
+always @ (posedge slowclock)//is this working with the updated data from reg shift?
+begin
+	out=x[0]^x[1];
+end
 //p1
-
+always @ (negedge slowclock)     
+begin
+	out=x[0]^x[1]^x[2];
+end
 //shift register of inputs
 always@(posedge slowclock)
 begin
