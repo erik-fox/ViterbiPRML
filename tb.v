@@ -1,14 +1,13 @@
 module top();
-reg clock, reset, in, Clock, Clear;
+reg  reset=0, in, Clock;
 wire out;
-
+parameter SIMTIME = 10000;
 parameter TRUE   = 1'b1;
 parameter FALSE  = 1'b0;
 parameter CLOCK_CYCLE  = 20;
 parameter CLOCK_WIDTH  = CLOCK_CYCLE/2;
-parameter IDLE_CLOCKS  = 2;
 
-vencoder v0(clock, reset, in, out);
+vencoder v0(Clock, reset, in, out);
 //
 // Create free running clock
 //
@@ -19,37 +18,22 @@ Clock = FALSE;
 forever #CLOCK_WIDTH Clock = ~Clock;
 end
 
-//
-// Generate Clear signal for two cycles
-//
-
-initial
-begin
-Clear = TRUE;
-repeat (IDLE_CLOCKS) @(negedge Clock);
-Clear = FALSE;
-end
-
-
 initial
 begin
 $monitor("output = %b", out);
 end
 
-initial
+always@ (negedge Clock)
 begin
-repeat (6) @(posedge Clock); in = 1'b0;   // 00
-repeat (6) @(posedge Clock); in = 1'b1;   // 11
-repeat (6) @(posedge Clock); in = 1'b1;   // 00
-repeat (6) @(posedge Clock); in = 1'b1;   // 10
-repeat (6) @(posedge Clock); in = 1'b0;   // 01
-repeat (6) @(posedge Clock); in = 1'b1;   // 01
-repeat (6) @(posedge Clock); in = 1'b0;   // 11
-repeat (6) @(posedge Clock); in = 1'b0;   // 10
-repeat (6) @(posedge Clock); in = 1'b0;   // 00
-$stop;
+	in=$urandom();
+	$display("input = %b",in);
 end
 
+always
+begin
+	#SIMTIME
+	$stop;
+end
 
 endmodule
 
