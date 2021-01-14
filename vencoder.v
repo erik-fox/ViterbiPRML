@@ -9,9 +9,9 @@ always @ (posedge clock)
 	slowclock<=~slowclock;
 
 //combinational logic with blocking assignments into the output
-always @ (posedge slowclock)//is this working with the new data?
+//always @ (posedge slowclock)//is this working with the new data?
 //po
-always @ (negedge slowclock)     
+//always @ (negedge slowclock)     
 //p1
 
 //shift register of inputs
