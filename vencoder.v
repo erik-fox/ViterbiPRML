@@ -4,4 +4,8 @@ output logic out;
 
 // follow the design with procedural statements.  just design it like the
 // schematic.
+  
+always@(posedge slowclock)
+begin
+end
 endmodule
