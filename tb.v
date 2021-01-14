@@ -8,7 +8,7 @@ parameter CLOCK_CYCLE  = 20;
 parameter CLOCK_WIDTH  = CLOCK_CYCLE/2;
 parameter IDLE_CLOCKS  = 2;
 
-
+vencoder v0(clock, reset, in, out);
 //
 // Create free running clock
 //
