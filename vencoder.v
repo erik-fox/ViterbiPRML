@@ -6,10 +6,13 @@ reg [0:2]x;
 reg slowclock;
 //create slow clock
 always @ (posedge clock)
-  slowclock=~slowclock;
+  slowclock<=~slowclock;
 
 //combinational logic with blocking assignments into the output
- 
+ always @ (posedge slowclock)//is this working with the new data?
+ //po
+ always @ (negedge slowclock)     
+ //p1
 //shift register of inputs
 always@(posedge slowclock)
 begin
