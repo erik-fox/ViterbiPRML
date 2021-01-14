@@ -19,6 +19,6 @@ begin
 end
 //async reset
 always @(reset)
-  x=3'b000;    
+  {slowclock,x}=4'b000;    
 
 endmodule
