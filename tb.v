@@ -1,6 +1,6 @@
 module top();
-reg clock, reset, input;
-wire output;
+reg clock, reset, in, Clock, Clear;
+wire out;
 
 parameter TRUE   = 1'b1;
 parameter FALSE  = 1'b0;
@@ -29,36 +29,24 @@ Clear = TRUE;
 repeat (IDLE_CLOCKS) @(negedge Clock);
 Clear = FALSE;
 end
-//
-// Generate stimulus after waiting for reset
-//
-
-initial
-begin
-
-//
-// Generate stimulus after waiting for reset
-//
 
 
 initial
 begin
-$monitor("output = %b", output);
+$monitor("output = %b", out);
 end
 
 initial
 begin
-
-repeat (6) @(posedge Clock); input = 1'b0;   // 00
-repeat (6) @(posedge Clock); input = 1'b1;   // 11
-repeat (6) @(posedge Clock); input = 1'b1;   // 00
-repeat (6) @(posedge Clock); input = 1'b1;   // 10
-repeat (6) @(posedge Clock); input = 1'b0;   // 01
-repeat (6) @(posedge Clock); input = 1'b1;   // 01
-repeat (6) @(posedge Clock); input = 1'b0;   // 11
-repeat (6) @(posedge Clock); input = 1'b0;   // 10
-repeat (6) @(posedge Clock); input = 1'b0;   // 00
-
+repeat (6) @(posedge Clock); in = 1'b0;   // 00
+repeat (6) @(posedge Clock); in = 1'b1;   // 11
+repeat (6) @(posedge Clock); in = 1'b1;   // 00
+repeat (6) @(posedge Clock); in = 1'b1;   // 10
+repeat (6) @(posedge Clock); in = 1'b0;   // 01
+repeat (6) @(posedge Clock); in = 1'b1;   // 01
+repeat (6) @(posedge Clock); in = 1'b0;   // 11
+repeat (6) @(posedge Clock); in = 1'b0;   // 10
+repeat (6) @(posedge Clock); in = 1'b0;   // 00
 $stop;
 end
 
@@ -66,11 +54,5 @@ end
 endmodule
 
 
-
-$stop;
-end
-
-
-endmodule
 
 
