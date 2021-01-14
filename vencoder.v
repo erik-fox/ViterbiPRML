@@ -7,20 +7,25 @@ reg slowclock=0;
 //create slow clock
 always @ (posedge clock)
 	slowclock<=~slowclock;
+initial
+begin
+	$monitor("register = %b", x);
+end
 
-//combinational logic with blocking assignments into the output
-//po
-
-//p1
 always@(negedge slowclock)
-	out=x[0]^x[1]^x[2];
+begin
+	out=x[0]^x[1];
+	$display("negedge out = %b", out);
+end
 //shift register of inputs
 always@(posedge slowclock)
 begin
 	x[0]<= in;
 	x[1]<=x[0];
 	x[2]<=x[1];
-	out<=in^x[0]^x[1];
+	$display("in %b x[0] %b x[1]" , in,x[0],x[1]); 
+	out =  in^x[0]^x[1];
+	$display(" posedge out - %b",out);
 end
 
 //async reset
