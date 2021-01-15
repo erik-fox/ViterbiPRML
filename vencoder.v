@@ -11,22 +11,23 @@ always @ (posedge clock)
 always@(negedge slowclock)
 begin
 	out=x[0]^x[1];
-//	$display("negedge out = %b", out);
+	$display("p1 - %b", x[0]^x[1]);
 end
 //shift register of inputs
 always@(posedge slowclock)
 begin
+	$display("State: %b",{in, x[0],x[1]});	
 	x[0]<= in;
 	x[1]<=x[0];
 	x[2]<=x[1];
-	$display("in %b x[0] %b x[1]" , in,x[0],x[1]); 
 	out =  in^x[0]^x[1];
-//	$display(" posedge out - %b",out);
+	$display("p0 - %b",in^x[0]^x[1]);
 end
-//always @(slowclock)
-	//$display("output - %b", out);
-//async reset
-always @(reset)
-	{slowclock,x}=4'b000;    
 
+//async reset
+always @(negedge reset)
+begin
+	{slowclock,x}=4'b000;   
+	$display("Reset: State - %b In - %b", {x[0],x[1]}, in); 
+end
 endmodule
