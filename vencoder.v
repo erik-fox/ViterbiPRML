@@ -20,7 +20,7 @@ assign out = ((x[0]^x[1]^x[2])&& slowclock) || ((~slowclock)&&(x[0]^x[1]));
 
 
 //async reset
-always @(negedge reset)
+always @(posedge reset)
 begin
 	{slowclock,x}=4'b000;   
 end

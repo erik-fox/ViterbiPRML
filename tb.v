@@ -12,7 +12,7 @@ vdecoder d0(Clock, reset, out,decoded, error);
 
 initial
 begin
-	$monitor("clock %b slowclock %b vencoder input %b vencoder output %b vdecoder output %b error %b",Clock, slow, in,out, decoded, error);
+	$monitor("clock %b slowclock %b vencoder input %b vencoder output %b vdecoder output %b reset %b error %b",Clock, slow, in,out, decoded, reset, error);
 end
 
 initial
@@ -29,15 +29,26 @@ begin
 end
 initial
 begin
-	repeat (1) @ (negedge slow); in =1'b0;
-	repeat (1) @ (negedge slow); in =1'b1;
-	repeat (1) @ (negedge slow); in =1'b0;
-	repeat (1) @ (negedge slow); in =1'b1;
-	repeat (1) @ (negedge slow); in =1'b1;
-	repeat (1) @ (negedge slow); in =1'b1;
-	repeat (1) @ (negedge slow); in =1'b0;
-	repeat (6) @ (negedge slow); in =1'b0;
-
+	repeat (1) @ (negedge slow); {in,reset} =2'b00;
+	repeat (1) @ (negedge slow); {in,reset} =2'b10;
+	repeat (1) @ (negedge slow); {in,reset} =2'b00;
+	repeat (1) @ (negedge slow); {in,reset} =2'b10;
+	repeat (1) @ (negedge slow); {in,reset} =2'b10;
+	repeat (1) @ (negedge slow); {in,reset} =2'b10;
+	repeat (1) @ (negedge slow); {in,reset} =2'b00;
+	repeat (1) @ (negedge slow); {in,reset} =2'b00;
+	repeat (1) @ (negedge slow); {in,reset} =2'b10;
+	repeat (1) @ (negedge slow); {in,reset} =2'b01;
+	repeat (1) @ (negedge slow); {in,reset} =2'b10;
+	repeat (1) @ (negedge slow); {in,reset} =2'b10;
+	repeat (1) @ (negedge slow); {in,reset} =2'b01;
+	repeat (1) @ (negedge slow); {in,reset} =2'b10;
+	repeat (1) @ (negedge slow); {in,reset} =2'b10;
+	repeat (1) @ (negedge slow); {in,reset} =2'b00;
+	repeat (1) @ (negedge slow); {in,reset} =2'b11;
+	repeat (1) @ (negedge slow); {in,reset} =2'b00;
+	repeat (1) @ (negedge slow); {in,reset} =2'b00;
+	repeat (1) @ (negedge slow); {in,reset} =2'b00;
 	$stop;
 end
 

@@ -68,7 +68,7 @@ begin
 	state={out,state[0]};
 end
 
-always @(negedge reset)
+always @(posedge reset)
 begin
 	//set state back to zero
 	state<=2'b00;
