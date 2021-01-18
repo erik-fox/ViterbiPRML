@@ -2,7 +2,6 @@ module top();
 reg  reset=0, in=0, Clock, slow=0, error=0;
 wire out, decoded;
 
-parameter SIMTIME = 1000;
 parameter TRUE   = 1'b1;
 parameter FALSE  = 1'b0;
 parameter CLOCK_CYCLE  = 20;
@@ -13,7 +12,7 @@ vdecoder d0(Clock, reset, out,decoded, error);
 
 initial
 begin
-	$monitor("error %b",error);
+	$monitor("clock %b slowclock %b vencoder input %b vencoder output %b vdecoder output %b error %b",Clock, slow, in,out, decoded, error);
 end
 
 initial
@@ -27,16 +26,18 @@ end
 always @(posedge Clock)
 begin
 	slow=~slow;
-	$display("Vencoder Output - %b",out);
 end
-always @(negedge slow)
+initial
 begin
-	in = $urandom();
-end
+	repeat (1) @ (negedge slow); in =1'b0;
+	repeat (1) @ (negedge slow); in =1'b1;
+	repeat (1) @ (negedge slow); in =1'b0;
+	repeat (1) @ (negedge slow); in =1'b1;
+	repeat (1) @ (negedge slow); in =1'b1;
+	repeat (1) @ (negedge slow); in =1'b1;
+	repeat (1) @ (negedge slow); in =1'b0;
+	repeat (6) @ (negedge slow); in =1'b0;
 
-always
-begin
-	#SIMTIME
 	$stop;
 end
 

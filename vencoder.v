@@ -14,8 +14,6 @@ begin
 	x[0]<=in; 
 	x[1]<=x[0];
 	x[2]<=x[1];
-	$display("input: %b",in);
-	$display("encoder State: %b",{x[0],x[1]});	
 end
 
 assign out = ((x[0]^x[1]^x[2])&& slowclock) || ((~slowclock)&&(x[0]^x[1]));
@@ -25,6 +23,5 @@ assign out = ((x[0]^x[1]^x[2])&& slowclock) || ((~slowclock)&&(x[0]^x[1]));
 always @(negedge reset)
 begin
 	{slowclock,x}=4'b000;   
-	$display("Reset");
 end
 endmodule

@@ -9,20 +9,24 @@ always @ (posedge clock)
 
 always @( posedge slowclock)
 begin
-	$display("x %b x[0] %b x[1] %b", x, x[0],x[1]);
+	
 	case(state)
 		2'b00:
+			begin
 			if(x==2'b01 || x==2'b10)
 				error=1;
 			else
 			begin
 				error=0;
 				if(x==2'b00)
+				begin
 					out=1'b0;
+				end
 				else
 					out=1'b1;	
 			end
-		2'b10:
+			end
+		2'b10:begin
 			if(x==2'b01 || x==2'b10)
 				error=1;
 			else
@@ -33,7 +37,8 @@ begin
 				else
 					out=1'b0;	
 			end
-		2'b11:
+			end
+		2'b11:begin
 			if(x==2'b00 || x==2'b11)
 				error=1;
 			else
@@ -44,7 +49,8 @@ begin
 				else
 					out=1'b0;	
 			end
-		2'b01:
+			end
+		2'b01:begin
 			if(x==2'b00 || x==2'b11)
 				error=1;
 			else
@@ -54,14 +60,12 @@ begin
 					out=1'b0;
 				else
 					out=1'b1;	
+			end
 			end
 
 	endcase
-	$display("current state %b", state);
-	$display("decoded %b",out);
-	state={out,state[0]};
-	$display("next decoded state: %b",state);
 	
+	state={out,state[0]};
 end
 
 always @(negedge reset)
