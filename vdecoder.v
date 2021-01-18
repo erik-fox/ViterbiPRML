@@ -2,13 +2,17 @@ module vdecoder(clock, reset, in, out, error);
 input logic clock, in, reset;
 output logic out, error;
 reg slowclock=0;
-reg [0:1] state;
+reg [0:1] state= 2'b00;
 reg [0:1] x=2'b00;
 always @ (posedge clock)
 	slowclock<=~slowclock;
 
 always @( posedge slowclock)
 begin
+
+	out= (((~state[0])&&x[1])||(state[0]&& (~x[1])));
+	$display("decoded %b",out);
+	$display("last state %b x %b", state, x);
 	case(state)
 		2'b00:
 			if(x==2'b01 || x==2'b10)
@@ -32,7 +36,10 @@ begin
 				error=0;
 
 	endcase
-	out= (((~state[0])&&x[1])||(state[0]&& (~x[1])))&&(~error);
+
+	state={out,state[0]};
+	$display("vdecoded state: %b",state);
+	
 end
 
 always @(negedge reset)
@@ -41,12 +48,6 @@ begin
 	state<=2'b00;
 	x<=2'b00;
 	slowclock<=0;
-end
-// change state
-always@(posedge slowclock)
-begin
-	state[0]<=x[0];
-	state[1]<=x[1];	
 end
 //take inputs
 always@(posedge clock)
