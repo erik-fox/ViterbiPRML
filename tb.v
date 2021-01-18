@@ -1,5 +1,5 @@
 module top();
-reg  reset=0, in=1, Clock, slow=0;
+reg  reset=0, in=0, Clock, slow=0;
 wire out;
 
 parameter SIMTIME = 1000;
@@ -8,11 +8,7 @@ parameter FALSE  = 1'b0;
 parameter CLOCK_CYCLE  = 20;
 parameter CLOCK_WIDTH  = CLOCK_CYCLE/2;
 
-reg [0:1]x=2'b00; 
 vencoder v0(Clock, reset, in, out);
-//
-// Create free running clock
-//
 
 initial
 begin
@@ -20,14 +16,22 @@ Clock = FALSE;
 forever #CLOCK_WIDTH Clock = ~Clock;
 end
 
+
+
 always @(posedge Clock)
 begin
 	slow=~slow;
-	$display("tb Output - %b",out);
+	$display("Vencoder Output - %b",out);
 end
 always @(negedge slow)
 begin
 	in = $urandom();
+end
+
+always @(posedge slow)
+begin
+	
+	$display("input: %b",in);
 end
 
 initial
