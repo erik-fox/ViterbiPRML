@@ -28,42 +28,6 @@ begin
 	in = $urandom();
 end
 
-always @(posedge slow)
-begin
-	
-	$display("input: %b",in);
-end
-
-initial
-begin
-	#5
-		reset=1'b0;
-	#50
-		reset=1'b1;
-	#65	
-		reset=1'b0;
-	#75
-		reset=1'b1;
-	#85
-		reset=1'b0;
-	#7
-		reset=1'b1;
-	#83
-		reset=1'b0;
-	#50
-		reset=1'b1;
-	#65	
-		reset=1'b0;
-	#75
-		reset=1'b1;
-	#85
-		reset=1'b0;
-	#7
-		reset=1'b1;
-	#83
-		reset=1'b0;
-end
-
 always
 begin
 	#SIMTIME

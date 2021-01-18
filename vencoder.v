@@ -8,18 +8,21 @@ reg slowclock=0;
 always @ (posedge clock)
 	slowclock<=~slowclock;
 
-always@(~slowclock)
-begin
-	out=x[0]^x[1];
-end
 //shift register of inputs
 always@(posedge slowclock)
 begin
-	$display("State: %b",{x[0],x[1]});	
-	x[0]<= in;
+	x[0]<=in; 
 	x[1]<=x[0];
 	x[2]<=x[1];
-	out =  in^x[0]^x[1];
+	$display("input: %b",in);
+	$display("State: %b",{x[0],x[1]});	
+end
+
+assign out = ((x[0]^x[1]^x[2])&& slowclock) || ((~slowclock)&&(x[0]^x[1]));
+
+initial
+begin
+	$monitor("module monitor output %b", out);
 end
 
 //async reset
