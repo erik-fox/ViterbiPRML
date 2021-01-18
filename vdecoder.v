@@ -9,36 +9,58 @@ always @ (posedge clock)
 
 always @( posedge slowclock)
 begin
-
-	out= (((~state[0])&&x[1])||(state[0]&& (~x[1])));
-	$display("decoded %b",out);
-	$display("last state %b x %b", state, x);
+	$display("x %b x[0] %b x[1] %b", x, x[0],x[1]);
 	case(state)
 		2'b00:
 			if(x==2'b01 || x==2'b10)
 				error=1;
 			else
+			begin
 				error=0;
+				if(x==2'b00)
+					out=1'b0;
+				else
+					out=1'b1;	
+			end
 		2'b10:
 			if(x==2'b01 || x==2'b10)
 				error=1;
 			else
+			begin
 				error=0;
+				if(x==2'b00)
+					out=1'b1;
+				else
+					out=1'b0;	
+			end
 		2'b11:
 			if(x==2'b00 || x==2'b11)
 				error=1;
 			else
+			begin
 				error=0;
+				if(x==2'b01)
+					out=1'b1;
+				else
+					out=1'b0;	
+			end
 		2'b01:
 			if(x==2'b00 || x==2'b11)
 				error=1;
 			else
+			begin
 				error=0;
+				if(x==2'b01)
+					out=1'b0;
+				else
+					out=1'b1;	
+			end
 
 	endcase
-
+	$display("current state %b", state);
+	$display("decoded %b",out);
 	state={out,state[0]};
-	$display("vdecoded state: %b",state);
+	$display("next decoded state: %b",state);
 	
 end
 

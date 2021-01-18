@@ -1,6 +1,6 @@
 module top();
-reg  reset=0, in=0, Clock, slow=0;
-wire out;
+reg  reset=0, in=0, Clock, slow=0, error=0;
+wire out, decoded;
 
 parameter SIMTIME = 1000;
 parameter TRUE   = 1'b1;
@@ -9,6 +9,12 @@ parameter CLOCK_CYCLE  = 20;
 parameter CLOCK_WIDTH  = CLOCK_CYCLE/2;
 
 vencoder v0(Clock, reset, in, out);
+vdecoder d0(Clock, reset, out,decoded, error);
+
+initial
+begin
+	$monitor("error %b",error);
+end
 
 initial
 begin
