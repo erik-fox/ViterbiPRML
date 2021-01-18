@@ -38,8 +38,9 @@ end
 always @(negedge reset)
 begin
 	//set state back to zero
-	state=2'b00;
-	slowclock=0;
+	state<=2'b00;
+	x<=2'b00;
+	slowclock<=0;
 end
 // change state
 always@(posedge slowclock)
